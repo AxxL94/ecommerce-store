@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_USER: ecommerce_user
+      POSTGRES_PASSWORD: ecommerce_pass
+      POSTGRES_DB: ecommerce_db
+    networks:
+      - back_db_network
+    ports:
+      - "5432:5432"
+
+  backend:
+    image: axxl94/projet_docker_backend:latest
+    #build: ./backend
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ecommerce_user
+      DB_PASSWORD: ecommerce_pass
+      DB_NAME: ecommerce_db
+    networks:
+      - front_back_network
+      - back_db_network
+    ports:
+      - "3000:3000"
+
+  frontend:
+    image: axxl94/projet_docker_frontend:latest
+    #build: ./frontend
+    depends_on:
+      - backend
+    networks:
+      - front_back_network
+    ports:
+      - "80:80"
+
+volumes:
+  db_data:
+
+networks:
+  front_back_network:
+    driver: bridge
+  back_db_network:
+    driver: bridge
+

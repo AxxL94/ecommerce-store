@@ -27,11 +27,14 @@ networks:
 Chaque service est connecté uniquement aux réseaux dont il a besoin, pour plus de sécurité et une meilleure isolation.
 ________________________________________
 Pour lancer les conteneur grâce au docker-compose.yml, j’exécute la commande :
-docker-compose up -d –build
+docker-compose up -d –build;
+
 Pour tester la persistance, j’arrête les conteneurs sans les supprimer et sans supprimer les volumes avec cette commande :
-docker-compose down
+docker-compose down;
+
 Je redemarre les conteneurs ensuite avec cette commande :
-docker-compose up -d
+docker-compose up -d;
+
 Pour stopper et supprimer toute l’infrastructure docker, j’exécute cette commande :
-docker-compose down --volumes 
+docker-compose down --volumes;
 

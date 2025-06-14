@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
-RUN npm run build || echo "No build script defined, continuing..."
+RUN npm run build || echo "Aucun script de build dans package.json — étape ignorée"
 
 EXPOSE 3000
 CMD ["node", "app.js"]
